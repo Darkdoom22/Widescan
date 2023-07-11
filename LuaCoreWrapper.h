@@ -82,6 +82,10 @@ namespace LuaCoreWrapper
 	const fnLua_PushValue oLua_PushValue = reinterpret_cast<fnLua_PushValue>(
 		GetProcAddress(LuaCore, "lua_pushvalue"));
 
+	using fnLuaL_Error = int(__cdecl*)(lua_State*, const char*, ...);
+	const fnLuaL_Error oLuaL_Error = reinterpret_cast<fnLuaL_Error>(
+		GetProcAddress(LuaCore, "luaL_error"));
+
 #define oLua_NewTable(L) oLua_CreateTable(L, 0, 0)
 #define oLua_Pop(L, n) oLua_SetTop(L, -(n)-1)
 }

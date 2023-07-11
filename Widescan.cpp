@@ -58,6 +58,11 @@ struct WidescanInfo
 
 static int GetWidescanInfo(lua_State* L)
 {
+	if (LuaCoreWrapper::oLua_GetTop(L) != 0)
+	{
+		return LuaCoreWrapper::oLuaL_Error(L, "GetWidescanInfo takes no arguments");
+	}
+
 	if(pGlobalNowZone)
 	{
 		const auto pNowZone = *reinterpret_cast<uintptr_t*>(pGlobalNowZone);
@@ -95,6 +100,11 @@ static int GetWidescanInfo(lua_State* L)
 
 static int TrackingStartSet(lua_State* L)
 {
+	if(LuaCoreWrapper::oLua_GetTop(L) != 1)
+	{
+		return LuaCoreWrapper::oLuaL_Error(L, "TrackingStartSet takes only 1 argument");
+	}
+
 	if (!oTrackingStartSet)
 	{
 		return 0;
@@ -107,6 +117,11 @@ static int TrackingStartSet(lua_State* L)
 
 static int TrackingStopSet(lua_State* L)
 {
+	if(LuaCoreWrapper::oLua_GetTop(L) != 0)
+	{
+		return LuaCoreWrapper::oLuaL_Error(L, "TrackingStopSet takes no arguments");
+	}
+
 	if (!oTrackingStopSet)
 	{
 		return 0;
@@ -128,7 +143,6 @@ extern "C" int __declspec(dllexport) luaopen_Widescan(lua_State* L)
 	};
 
 	LuaCoreWrapper::oLuaL_Register(L, "Widescan", funcs);
-
 	return 1;
 }
 
